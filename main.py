@@ -225,7 +225,7 @@ def main():
     for i in range(2):
         print("| |" + "".center(40) + "|")
     print("| |" + "________________".center(40) + "|")
-    print("| |" + "| ~Bonjournal~ |".center(40) + "|")
+    print("| |" + "| ~LittleBigJournal~ |".center(40) + "|")
     print("| |" + "----------------".center(40) + "|")
     for i in range(3):
         print("| |" + "".center(40) + "|")

@@ -1,0 +1,11 @@
+# first journal entries, going to convert later.
+Dec_2021
+
+# swp files created by vim
+*.swp
+
+# Journals directory created
+Journals
+
+# TODO file
+TODO

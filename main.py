@@ -126,7 +126,7 @@ def open_journal():
 
 def fetch_entry():
     print("Your entry: ")
-    entry = input(">>>")
+    entry = input(">>> ")
     return entry
 
 
@@ -145,8 +145,7 @@ def journal_entry():
     if journal == "" or journal == "exit":
         return 
     else:
-        title = input("\nTitle for this entry \
-                (if left blank, date will be used): ")
+        title = input("\nTitle for this entry (if left blank, date will be used): ")
 
     entry = fetch_entry()
     today = datetime.datetime.now()
@@ -209,14 +208,17 @@ def opened_journal_entry(journal_path):
 def read_entry(journal_path):
     entries_list = os.listdir('.')
     print("Current Entries: " + str(len(entries_list)) + "\n")
-    for entry in entries_list:
-        print(entry.rjust(15, '.'))
+    entries_dictionary = {}
+
+    for i, entry in enumerate(entries_list):
+        entries_dictionary[str(i)] = entry                   # Creating dicitonary for entries
+        print(str(i) + entry.rjust(15, '.'))
         
-    print("\nWhich entry would you like to read?\n")
+    print("\nWhich entry would you like to read? (enter number)\n")
     entry_selection = input(">>> ")
     
     try:
-        entry_file = open(journal_path + '/' + entry_selection)
+        entry_file = open(journal_path + '/' + entries_dictionary[entry_selection])
         entry_contents = entry_file.read()
         print("\n...\n")
         print("".rjust(5) + entry_contents)
@@ -231,18 +233,18 @@ def delete_entry(journal_path):
     entries_dictionary = {}
 
     for i, entry in enumerate(entries_list):
-        entries_dictionary[i] = entry                   # Creating dicitonary for entries
+        entries_dictionary[str(i)] = entry                   # Creating dicitonary for entries
         print(str(i) + entry.rjust(15, '.'))
         
-    print("\nWhich entry would you like to delete?\n")
+    print("\nWhich entry would you like to delete? (enter number)\n")
     entry_selection = input(">>> ")
 
-    print(f"Are you sure you want to delete {entries_dictionary[i]}?")
+    print(f"Are you sure you want to delete {entries_dictionary[entry_selection]}?")
     choice = input("y/n: ")
 
     if choice == "yes" or choice == "y":
-        os.remove(journal_path + "/" + entries_dictionary[i])
-        print(f"Entry {entries_dictionary[i]} successfully deleted")
+        os.remove(journal_path + "/" + entries_dictionary[entry_selection])
+        print(f"Entry {entries_dictionary[entry_selection]} successfully deleted")
     else:
         print("No entries deleted")
         
@@ -275,7 +277,7 @@ def main():
             print("    destroy      Delete a journal")
             print("    view         List journals available")
             print("    open         Open a journal")
-            print("\nJournal editing (Need to open journal first)")
+            print("\nJournal editing (Open journal for more editing options)")
             print("    add          Add entry to a journal\n")
             print("    help         Opens this menu")
             print("    exit         Go back to real life\n")

@@ -16,11 +16,11 @@ def make_journal():
     path = cwd + "/Journals/" + name 
 
     try:
-        os.mkdir(path)
+        os.makedirs(path)
     except OSError: 
-        print(f"Creation of the directory {path} failed.")
+        print(f"Creation of the journal {name} failed.\n")
     else:
-        print(f"Journal {path} successfully created.\n")
+        print(f"Journal {name} successfully created.\n")
 
 
 def delete_journal():
@@ -33,15 +33,25 @@ def delete_journal():
     journal = input("\nWhich Journal would you like to delete? ")
     path = main_cwd + "/Journals/" + journal
 
-    try:
-        os.rmdir(path)
-    except OSError:
-        print("\nJournal could not be deleted. You sure it exists?\n")
-    else: print(f"Journal {journal} successfully deleted.")
+    print(f"Are you sure you want to delete journal {journal}?")
+    choice = input("y/n: ")
+
+    if choice == "yes" or choice == "y":
+        try:
+            os.rmdir(path)
+        except OSError:
+            print("\nJournal could not be deleted. You sure it exists?\n")
+        else: print(f"Journal {journal} successfully deleted.")
+    else:
+        print("No journals were deleted")
 
 def view_journals():
     main_cwd = os.getcwd()
-    journal_list = os.listdir(main_cwd + "/Journals")
+    try:
+        journal_list = os.listdir(main_cwd + "/Journals")
+    except FileNotFoundError:
+        print("No journals to view. Try creating one with 'create'!")
+        return
     
     print("\nJournals collected:\n")
     for journal in journal_list:
@@ -55,14 +65,15 @@ def view_journals():
 def open_journal():
     while True:
         main_cwd = os.getcwd()
-        journal_list = os.listdir(main_cwd + '/Journals')
-
-        print("\nTotal Journals: " + str(len(journal_list)))
-        if len(journal_list) < 1:
+        try:
+            journal_list = os.listdir(main_cwd + '/Journals')
+        except FileNotFoundError:
             print("There are no journals to open. Try creating one!")
             return
 
+        print("\nTotal Journals: " + str(len(journal_list)))
         print("Journals available:\n")
+
         for journal in journal_list:
             print('- '.rjust(5) + journal)
         print("\n========\n")
@@ -93,16 +104,16 @@ def open_journal():
             print("\nJournal editing (Need to open journal first)")
             print("    add          Add entry to a journal")
             print("    delete       Remove entry from journal")
+            print("    read         Read an entry\n")
             print("    help         Opens this menu")
-            print("    read         Read an entry")
             print("    close        Close current journal")
             print("    exit         Go back to real life")
-            print("========\n")
+            print("\n========\n")
             continue
         if choice == "add":
             opened_journal_entry(journal_path)
         elif choice == "delete":
-            remove_entry()
+            delete_entry(journal_path)
         elif choice == "read":
             read_entry(journal_path)
         elif choice == "exit":
@@ -214,21 +225,41 @@ def read_entry(journal_path):
         print("\nI don't know if that entry exists...\n")
 
 
-#def delete_entry():
+def delete_entry(journal_path):
+    entries_list = os.listdir('.')
+    print("Current Entries: " + str(len(entries_list)) + "\n")
+    entries_dictionary = {}
+
+    for i, entry in enumerate(entries_list):
+        entries_dictionary[i] = entry                   # Creating dicitonary for entries
+        print(str(i) + entry.rjust(15, '.'))
+        
+    print("\nWhich entry would you like to delete?\n")
+    entry_selection = input(">>> ")
+
+    print(f"Are you sure you want to delete {entries_dictionary[i]}?")
+    choice = input("y/n: ")
+
+    if choice == "yes" or choice == "y":
+        os.remove(journal_path + "/" + entries_dictionary[i])
+        print(f"Entry {entries_dictionary[i]} successfully deleted")
+    else:
+        print("No entries deleted")
+        
     
 
 def main():
 
     #========= Launch Graphic ============
     print("\nWelcome to...\n")
-    print("=" * 44)
+    print("( )" +("=" * 40))
     for i in range(2):
-        print("| |" + "".center(40) + "|")
-    print("| |" + "________________".center(40) + "|")
-    print("| |" + "| ~LittleBigJournal~ |".center(40) + "|")
-    print("| |" + "----------------".center(40) + "|")
+        print("( )" + "".center(40) + "|")
+    print("( )" + " ____________________".center(40) + "|")
+    print("( )" + "| ~LittleBigJournal~ |".center(40) + "|")
+    print("( )" + " --------------------".center(40) + "|")
     for i in range(3):
-        print("| |" + "".center(40) + "|")
+        print("( )" + "".center(40) + "|")
     #=====================================
 
     print("\nEnter 'help' for available commands.")
@@ -245,8 +276,7 @@ def main():
             print("    view         List journals available")
             print("    open         Open a journal")
             print("\nJournal editing (Need to open journal first)")
-            print("    add          Add entry to a journal")
-            print("    delete       Remove entry from journal")
+            print("    add          Add entry to a journal\n")
             print("    help         Opens this menu")
             print("    exit         Go back to real life\n")
             continue
@@ -260,8 +290,6 @@ def main():
             view_journals()
         elif choice == "add":
             journal_entry()
-        elif choice == "delete":
-            remove_entry()
         elif choice == "exit":
             print("Until next time...")
             sys.exit()

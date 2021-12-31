@@ -10,14 +10,22 @@ import datetime
 
 def make_journal():
     print("========\n")
-    name = input("Please input name of journal: ")
+    while True:
+        name = input("Please input name of journal:\n>>> ")
+        if name == "exit":
+            return
+        elif name != "":
+            print("No name was entered. Type 'exit' to return to main menu.")
+            break
+        else:
+            continue
 
     cwd = os.getcwd()
-    path = cwd + "/Journals/" + name 
+    path = cwd + "/Journals/" + name
 
     try:
         os.makedirs(path)
-    except OSError: 
+    except OSError:
         print(f"Creation of the journal {name} failed.\n")
     else:
         print(f"Journal {name} successfully created.\n")
@@ -45,6 +53,7 @@ def delete_journal():
     else:
         print("No journals were deleted")
 
+
 def view_journals():
     main_cwd = os.getcwd()
     try:
@@ -52,12 +61,10 @@ def view_journals():
     except FileNotFoundError:
         print("No journals to view. Try creating one with 'create'!")
         return
-    
     print("\nJournals collected:\n")
     for journal in journal_list:
         print('- '.rjust(5) + journal)
     print()
-    
 
 #=============== Journal Editing Functions ===========================
 
@@ -143,7 +150,7 @@ def journal_entry():
     journal = input(">>> ")
     
     if journal == "" or journal == "exit":
-        return 
+        return
     else:
         title = input("\nTitle for this entry (if left blank, date will be used): ")
 
@@ -173,7 +180,7 @@ def journal_entry():
     entry_file.write(formatted_entry)
     entry_file.close()
     print(f"\n~Entry added to {journal} successfully.~\n")
-        
+
 
 def opened_journal_entry(journal_path):
     title = input("Title for this entry (if left blank, date will be used): ")
@@ -302,12 +309,12 @@ def main():
         print("========\n")
         continue_choice = input("Anything else? y/n: ") 
 
-        if continue_choice == "n" or continue_choice == "no":
+        if continue_choice in ('n', 'no'):
             print("See ya...")
             return
-        elif continue_choice == "y" or continue_choice == "yes":
+        elif continue_choice in ('y', 'yes'):
             continue
-        
+
 
 if __name__ == "__main__":
     main()

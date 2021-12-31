@@ -2,19 +2,6 @@
 
 ## A command line tool for creating, writing into, and maintaining a personal journal.
 
-( )=======================================\
-( )                                       |\
-( )                                       |\
-( )                                       |\
-( )         ____________________          |\
-( )        | ~LittleBigJournal~ |         |\
-( )         --------------------          |\
-( )                                       |\
-( )                                       |\
-( )                                       |\
-( )                                       |
-
-
 ### What does LittleBigJournal do?
 
 LittleBigJournal is a program that allows you to create a journal, add or

@@ -3,16 +3,16 @@
 ## A command line tool for creating, writing into, and maintaining a personal journal.
 
 ( )=======================================
-( )                                       |
-( )                                       |
-( )                                       |
-( )         ____________________          |
-( )        | ~LittleBigJournal~ |         |
-( )         --------------------          |
-( )                                       |
-( )                                       |
-( )                                       |
-( )                                       |
+\( )                                       |
+\( )                                       |
+\( )                                       |
+\( )         ____________________          |
+\( )        | ~LittleBigJournal~ |         |
+\( )         --------------------          |
+\( )                                       |
+\( )                                       |
+\( )                                       |
+\( )                                       |
 
 
 ### What does LittleBigJournal do?
@@ -25,11 +25,11 @@ line!
 
 1. First, clone this repo to the folder you would like to keep your journals in:
 
-    git clone https://github.com/jscervantes/littlebigjournal
+    `git clone https://github.com/jscervantes/littlebigjournal`
 
 2. Run the main.py file while in the repository folder to begin the program:
 
-    python3 main.py
+    `python3 main.py`
 
 3. The program will begin. Enter 'help' for more commands while in the program!
 
